@@ -40,7 +40,8 @@ import processing.video.*;
 import processing.serial.*;
 import java.awt.Rectangle;
 
-Movie myMovie = new Movie(this, "/tmp/Toy_Story.avi");
+//Movie myMovie = new Movie(this, "./mov2.mov");//"./data/movie.mp4");//"/tmp/Toy_Story.avi");
+PImage img;
 
 float gamma = 1.7;
 
@@ -60,21 +61,25 @@ void setup() {
   delay(20);
   println("Serial Ports List:");
   println(list);
-  serialConfigure("/dev/ttyACM0");  // change these to your port names
-  serialConfigure("/dev/ttyACM1");
+  serialConfigure("/dev/cu.usbmodem4438171");//("/dev/ttyACM0");  // change these to your port names
+  //serialConfigure("/dev/ttyACM1");
   if (errorCount > 0) exit();
   for (int i=0; i < 256; i++) {
     gammatable[i] = (int)(pow((float)i / 255.0, gamma) * 255.0 + 0.5);
   }
   size(480, 400);  // create the window
-  myMovie.loop();  // start the movie :-)
+  //myMovie.loop();  // start the movie :-)
+  
+  img = loadImage("./data/VirrorSampleSmall.jpg");
 }
 
  
 // movieEvent runs for each new frame of movie data
-void movieEvent(Movie m) {
+void event() {//void movieEvent(Movie m) {
   // read the movie's next frame
-  m.read();
+  //m.read();
+  
+  PImage m = img;
   
   //if (framerate == 0) framerate = m.getSourceFrameRate();
   framerate = 30.0; // TODO, how to read the frame rate???
@@ -197,7 +202,11 @@ void serialConfigure(String portName) {
 // draw runs every time the screen is redrawn - show the movie...
 void draw() {
   // show the original video
-  image(myMovie, 0, 80);
+  //image(myMovie, 0, 80);
+  
+  for (int i = 0; i < 30; i++) {
+    event();
+  }
   
   // then try to show what was most recently sent to the LEDs
   // by displaying all the images for each port.
@@ -217,10 +226,10 @@ void draw() {
 boolean isPlaying = true;
 void mousePressed() {
   if (isPlaying) {
-    myMovie.pause();
+    //myMovie.pause();
     isPlaying = false;
   } else {
-    myMovie.play();
+    //myMovie.play();
     isPlaying = true;
   }
 }
@@ -252,4 +261,3 @@ double percentageFloat(int percent) {
   if (percent ==  8) return 1.0 / 12.0;
   return (double)percent / 100.0;
 }
-
