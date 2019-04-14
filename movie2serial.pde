@@ -92,10 +92,8 @@ void draw() {
   // show the original video
 
   if (imageMode == ImageMode.IMAGE) {
-    //for (int i = 0; i < 30; i++) {
-    //if (foo == 0)
+    //if (doOnce == 0)
     event(testImage);
-    //}
   }
 
   if (imageMode == ImageMode.IMAGE) {

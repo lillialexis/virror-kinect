@@ -1,11 +1,6 @@
 
- 
-// movieEvent runs for each new frame of movie data
-void event(PImage frame) {//void movieEvent(Movie m) {
-  // read the movie's next frame
-  //m.read();
-  
-  //PImage m = testImage;
+
+void event(PImage frame) {
   
   //if (framerate == 0) framerate = m.getSourceFrameRate();
   framerate = 30.0; // TODO, how to read the frame rate???
@@ -36,7 +31,7 @@ void event(PImage frame) {//void movieEvent(Movie m) {
   }
 }
 
-int foo = 0;
+int doOnce = 0;
 
 // image2data converts an image to OctoWS2811's raw data format.
 // The number of vertical pixels in the image must be a multiple
@@ -69,16 +64,12 @@ void image2data(PImage image, byte[] data, boolean layout) {
     for (x = xbegin; x != xend; x += xinc) {
       for (int i = ibegin; i != iend; i += iinc) {
         // fetch 8 pixels from the image, 1 for each pin
-
-
-        //int index = (x + (y + lpp2 * i) * image.width);
-
-        int index = (i * 16) + (x) + (16 * 16 / 2 * y);
+        int index = xy(i, x, y, image.width, image.height, layout, linesPerPin);
 
         pixel[i] = image.pixels[index];
         pixel[i] = colorWiring(pixel[i]);
 
-        if (foo == 0) {
+        if (doOnce == 0) {
           print("y:\t", y);
           print("\t");
           print("x:\t", x);
@@ -98,5 +89,5 @@ void image2data(PImage image, byte[] data, boolean layout) {
     }
   }
 
-  foo++;
+  doOnce++;
 }
