@@ -40,10 +40,22 @@ import processing.video.*;
 import processing.serial.*;
 import java.awt.Rectangle;
 
-Movie myMovie;// = new Movie(this, "./mov2.mov");//"./data/movie.mp4");//"/tmp/Toy_Story.avi");
-PImage testImage;
+import org.openkinect.freenect.*;
+import org.openkinect.processing.*;
+
+Kinect kinect;
+
+float deg;
+
+boolean ir = false;
+boolean colorDepth = false;
+boolean mirror = false;
+
+Movie myMovie;
 
 float gamma = 1.7;
+
+PImage testImage;
 
 int numPorts=0;  // the number of serial ports in use
 int maxPorts=24; // maximum number of serial ports
@@ -77,6 +89,14 @@ void setup() {
     myMovie = new Movie(this, moviePath());
     myMovie.loop();  // start the movie :-)
   } else {
+    
+    kinect = new Kinect(this);
+    kinect.initDepth();
+    kinect.initVideo();
+    kinect.enableIR(ir);
+    kinect.enableColorDepth(colorDepth);
+    
+    deg = kinect.getTilt();
   }
 }
 
@@ -85,6 +105,16 @@ void movieEvent(Movie m) {
   // read the movie's next frame
   m.read();  
   event(m);
+}
+
+// videoEvent runs for each new frame of Kinect data
+void videoEvent(Kinect k) {
+  background(0);
+  PImage frame = k.getVideoImage();
+  image(frame, 0, 0);
+  fill(255);
+  
+  event(frame);
 }
 
 // draw runs every time the screen is redrawn - show the movie...
