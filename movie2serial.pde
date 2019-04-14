@@ -70,7 +70,7 @@ void setup() {
   size(480, 400);  // create the window
   //myMovie.loop();  // start the movie :-)
   
-  img = loadImage("./data/VirrorSampleSmall.jpg");
+  img = loadImage("./data/VirrorSampleMedium.jpg");
 }
 
  
@@ -117,95 +117,147 @@ int foo = 0;
 // of 8.  The data array must be the proper size for the image.
 void image2data(PImage image, byte[] data, boolean layout) {
   int offset = 3;
-  int x, y, xbegin, xend, xinc, mask;
+  int x, y, xbegin, xend, xinc, ibegin, iend, iinc, mask;
   int linesPerPin = image.height / 8;
   int lpp2 = linesPerPin / 2;
   int pixel[] = new int[8];
 
-  for (y = 0; y < lpp2; y++) {
+ for (y = 0; y < linesPerPin; y++) {
     if ((y & 1) == (layout ? 0 : 1)) {
       // even numbered rows are left to right
       xbegin = 0;
       xend = image.width;
       xinc = 1;
+      ibegin = 0;
+      iend = 8;
+      iinc = 1;
     } else {
       // odd numbered rows are right to left
       xbegin = image.width - 1;
       xend = -1;
       xinc = -1;
+      ibegin = 7;
+      iend = -1;
+      iinc = -1;
     }
-    for (x = xbegin; x != xend; x += xinc) {
 
-      for (int i=0; i < 8; i++) {
+    for (x = xbegin; x != xend; x += xinc) {
+      for (int i = ibegin; i != iend; i += iinc) {
         // fetch 8 pixels from the image, 1 for each pin
-        pixel[i] = image.pixels[x + (y + lpp2 * i) * image.width];
-        pixel[i] = colorWiring(pixel[i]);
-
-        if (foo == 0) {
-          print("y: ", y);
-          print("\t");
-          print("x: ", x);
-          print("\t");
-          println("i: ", x + (y + lpp2 * i) * image.width);
-        }
-      }
-
-      // convert 8 pixels to 24 bytes
-      for (mask = 0x800000; mask != 0; mask >>= 1) {
-        byte b = 0;
-        for (int i=0; i < 8; i++) {
-          if ((pixel[i] & mask) != 0) b |= (1 << i);
-        }
-        data[offset++] = b;
-      }
-    }
-  } 
-
-  for (y = 1; y < 2; y++) {
-    if ((y & 1) == (layout ? 0 : 1)) {
-      // even numbered rows are left to right
-      xbegin = 0;
-      xend = image.width;
-      xinc = 1;
-    } else {
-      // odd numbered rows are right to left
-      xbegin = image.width - 1;
-      xend = -1;
-      xinc = -1;
-    }
-    
-    for (x = xbegin; x != xend; x += xinc) {
-
-      for (int i=7; i > -1; i--) {
 
         //int index = (x + (y + lpp2 * i) * image.width);
-        //int index = (x + (y + lpp2 * i) * image.width) + 112;
 
-        int index = (i * 16) + (x) + (16 * 16 / 2);
+        int index = (i * 16) + (x) + (16 * 16 / 2 * y);
 
-        // fetch 8 pixels from the image, 1 for each pin
         pixel[i] = image.pixels[index];
         pixel[i] = colorWiring(pixel[i]);
 
         if (foo == 0) {
-          print("y: ", y);
+          print("y:\t", y);
           print("\t");
-          print("x: ", x);
+          print("x:\t", x);
           print("\t");
-          println("i: ", index);
+          println("i:\t", index);
         }
       }
 
       // convert 8 pixels to 24 bytes
       for (mask = 0x800000; mask != 0; mask >>= 1) {
         byte b = 0;
-        for (int i=0; i < 8; i++) {
+        for (int i = 0; i < 8; i++) {
           if ((pixel[i] & mask) != 0) b |= (1 << i);
         }
         data[offset++] = b;
       }
     }
   } 
+
+
+  //for (y = 0; y < lpp2; y++) {
+  //  if ((y & 1) == (layout ? 0 : 1)) {
+  //    // even numbered rows are left to right
+  //    xbegin = 0;
+  //    xend = image.width;
+  //    xinc = 1;
+  //  } else {
+  //    // odd numbered rows are right to left
+  //    xbegin = image.width - 1;
+  //    xend = -1;
+  //    xinc = -1;
+  //  }
+  //  for (x = xbegin; x != xend; x += xinc) {
+
+  //    for (int i=0; i < 8; i++) {
+  //      // fetch 8 pixels from the image, 1 for each pin
+  //      pixel[i] = image.pixels[x + (y + lpp2 * i) * image.width];
+  //      pixel[i] = colorWiring(pixel[i]);
+
+  //      if (foo == 0) {
+  //        print("y: ", y);
+  //        print("\t");
+  //        print("x: ", x);
+  //        print("\t");
+  //        println("i: ", x + (y + lpp2 * i) * image.width);
+  //      }
+  //    }
+
+  //    // convert 8 pixels to 24 bytes
+  //    for (mask = 0x800000; mask != 0; mask >>= 1) {
+  //      byte b = 0;
+  //      for (int i=0; i < 8; i++) {
+  //        if ((pixel[i] & mask) != 0) b |= (1 << i);
+  //      }
+  //      data[offset++] = b;
+  //    }
+  //  }
+  //}
+
+  //for (y = 1; y < 2; y++) {
+  //  if ((y & 1) == (layout ? 0 : 1)) {
+  //    // even numbered rows are left to right
+  //    xbegin = 0;
+  //    xend = image.width;
+  //    xinc = 1;
+  //  } else {
+  //    // odd numbered rows are right to left
+  //    xbegin = image.width - 1;
+  //    xend = -1;
+  //    xinc = -1;
+  //  }
+    
+  //  for (x = xbegin; x != xend; x += xinc) {
+
+  //    for (int i=7; i > -1; i--) {
+
+  //      //int index = (x + (y + lpp2 * i) * image.width);
+  //      //int index = (x + (y + lpp2 * i) * image.width) + 112;
+
+  //      int index = (i * 16) + (x) + (16 * 16 / 2);
+
+  //      // fetch 8 pixels from the image, 1 for each pin
+  //      pixel[i] = image.pixels[index];
+  //      pixel[i] = colorWiring(pixel[i]);
+
+  //      if (foo == 0) {
+  //        print("y: ", y);
+  //        print("\t");
+  //        print("x: ", x);
+  //        print("\t");
+  //        println("i: ", index);
+  //      }
+  //    }
+
+  //    // convert 8 pixels to 24 bytes
+  //    for (mask = 0x800000; mask != 0; mask >>= 1) {
+  //      byte b = 0;
+  //      for (int i=0; i < 8; i++) {
+  //        if ((pixel[i] & mask) != 0) b |= (1 << i);
+  //      }
+  //      data[offset++] = b;
+  //    }
+  //  }
+  //}
+
   foo++;
 }
 
