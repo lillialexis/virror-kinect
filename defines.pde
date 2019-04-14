@@ -1,6 +1,7 @@
 /* VALUES TO CHANGE */
 
 ImageMode imageMode = ImageMode.KINECT_VIDEO; 
+Board board = Board.DEV;
 
 String[] imagePaths = { 
   "./data/VirrorSampleSmall.jpg", 
@@ -26,6 +27,10 @@ String[] usbPorts = {
 };
 int usbPortIndex = 1;
 
+enum Board {
+  DEV,
+  REAL
+};
 
 enum ImageMode {
   IMAGE,
@@ -45,3 +50,8 @@ String imagePath() {
 String moviePath() {
     return moviePaths[moviePathIndex];
 }
+
+int boardDivisor() {
+  return board == Board.DEV ? 4 : 1;
+}
+  
