@@ -47,10 +47,6 @@ Kinect kinect;
 
 float deg;
 
-boolean ir = false;
-boolean colorDepth = false;
-boolean mirror = false;
-
 Movie myMovie;
 
 float gamma = 1.7;
@@ -93,8 +89,8 @@ void setup() {
     kinect = new Kinect(this);
     kinect.initDepth();
     kinect.initVideo();
-    kinect.enableIR(ir);
-    kinect.enableColorDepth(colorDepth);
+    kinect.enableIR(imageMode == ImageMode.KINECT_IR);
+    kinect.enableColorDepth(imageMode == ImageMode.KINECT_COLOR_DEPTH);
     
     deg = kinect.getTilt();
   }

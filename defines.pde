@@ -3,6 +3,8 @@
 ImageMode imageMode = ImageMode.KINECT_VIDEO; 
 Board board = Board.DEV;
 
+boolean mirrorKinect = false; // Not yet used anywhere
+
 String[] imagePaths = { 
   "./data/VirrorSampleSmall.jpg", 
   "./data/VirrorSampleMedium.jpg",
@@ -36,7 +38,8 @@ enum ImageMode {
   IMAGE,
   MOVIE,
   KINECT_VIDEO,
-  KINECT_IR
+  KINECT_IR,
+  KINECT_COLOR_DEPTH
 };
 
 String usbIdentifier() {
