@@ -10,11 +10,13 @@ String[] imagePaths = {
 int imagePathIndex = 0;
 
 String[] moviePaths = { 
-  "./data/movie.mp4", 
-  "./data/mov2.mov",
+  "movie.mp4", 
+  "mov2.mov",
+  "video.mp4",
+  "snowflake.avi"
   // Add more movies here, and change moviePathIndex to point to the movie you want
 };
-int moviePathIndex = 0;
+int moviePathIndex = 2;
 
 String[] usbPorts = { 
   "/dev/cu.usbmodem4438171",
@@ -22,7 +24,7 @@ String[] usbPorts = {
   "/dev/ttyACM0",
   // Add more port names here, and change usbPortIndex to point to the port you want
 };
-int usbPortIndex = 0;
+int usbPortIndex = 1;
 
 
 enum ImageMode {
