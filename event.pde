@@ -19,8 +19,8 @@ void event(PImage frame) {
     if (i == 0) {
       ledData[0] = '*';  // first Teensy is the frame sync master
       int usec = (int)((1000000.0 / framerate) * 0.75);
-      ledData[1] = (byte)(usec);   // request the frame sync pulse
-      ledData[2] = (byte)(usec >> 8); // at 75% of the frame time
+      ledData[1] = 0;//(byte)(usec);   // request the frame sync pulse
+      ledData[2] = 0;//(byte)(usec >> 8); // at 75% of the frame time
     } else {
       ledData[0] = '%';  // others sync to the master board
       ledData[1] = 0;

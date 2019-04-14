@@ -1,6 +1,6 @@
 /* VALUES TO CHANGE */
 
-ImageMode imageMode = ImageMode.IMAGE; 
+ImageMode imageMode = ImageMode.KINECT_VIDEO; 
 
 String[] imagePaths = { 
   "./data/VirrorSampleSmall.jpg", 
@@ -16,7 +16,7 @@ String[] moviePaths = {
   "snowflake.avi"
   // Add more movies here, and change moviePathIndex to point to the movie you want
 };
-int moviePathIndex = 2;
+int moviePathIndex = 3;
 
 String[] usbPorts = { 
   "/dev/cu.usbmodem4438171",
