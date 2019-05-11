@@ -119,7 +119,6 @@ void setCurrentEventFrame(PImage frame) {
 void movieEvent(Movie m) {
   // read the movie's next frame
   m.read();  
-  //event(m);
   setCurrentEventFrame(m);
 }
 
@@ -142,18 +141,10 @@ PImage mixedFrames() {
   int fadeAmount = fadeCounter == fadeSpeed ? 
                       0 : 
                       255 - ((255 / fadeSpeed) * fadeCounter);
-  
-  println(fadeAmount);
-  
-  //currentEventFrame.loadPixels();
-  //image(currentEventFrame, 0, 0);
   background(0);
   tint(255, fadeAmount);
   image(currentEventFrame, -10, 0);
-  //currentEventFrame.updatePixels();
-  
-  //currentEventFrame.ALPHA_MASK = fadeAmount;
-  
+   
   return currentEventFrame;
 }
 
