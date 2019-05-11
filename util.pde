@@ -1,13 +1,13 @@
 long lastFrameTime = 0;
 void time1() {
-  //long currentFrameTime = System.currentTimeMillis();
-  //long frameDelta = currentFrameTime - lastFrameTime;
-  //float toSeconds = (float)frameDelta / 1000;
-  //float frameRate = 1 / toSeconds;
+  long currentFrameTime = System.currentTimeMillis();
+  long frameDelta = currentFrameTime - lastFrameTime;
+  float toSeconds = (float)frameDelta / 1000;
+  float frameRate = 1 / toSeconds;
 
-  //println(frameRate);
+  println(frameRate);
 
-  //lastFrameTime = currentFrameTime;
+  lastFrameTime = currentFrameTime;
 }
 
 long lastFlop1 = 0;
@@ -17,8 +17,9 @@ void flop1() {
   float delta = (float)(flop - lastFlop1) / 1000.0;
   lastFlop1 = flop;
 
-  print("k: ");
-  println(delta);
+  print("fr1: ");
+  print(100.0 / delta);
+  println(" fps");
 }
 
 void flop2() {
@@ -26,8 +27,9 @@ void flop2() {
   float delta = (float)(flop - lastFlop2) / 1000.0;
   lastFlop2 = flop;
   
-  print("d: ");
-  println(delta);
+  print("fr2: ");
+  print(100.0 / delta);
+  println(" fps");
 }
 
 // translate the 24 bit color from RGB to the actual

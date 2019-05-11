@@ -22,7 +22,6 @@ int smFrameTimeout = 100;
 
 void checkUpdatePrimary() {
   if (pmFrameCounter == pmFrameTimeout) {
-    flop1();
     pmFrameCounter = 0;
 
     primary = EMPrimary.values()[(primary.ordinal() + 1) 
@@ -34,7 +33,6 @@ void checkUpdatePrimary() {
 
 void checkUpdateSecondary() {
   if (smFrameCounter == smFrameTimeout) {
-    flop2();
     smFrameCounter = 0;
 
     secondary = EMSecondary.values()[(secondary.ordinal() + 1) 

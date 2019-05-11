@@ -96,48 +96,44 @@ void setup() {
   }
 }
 
-PImage lastEventFrame = null;
+long fr1 = 0;
+long fr2 = 0;
 
+PImage lastEventFrame = null;
+void setLastEventFrame(PImage frame) {
+  lastEventFrame = frame;
+  
+  if (fr1 % 100 == 0) flop1();
+  fr1++;
+}
+  
 // movieEvent runs for each new frame of movie data
 void movieEvent(Movie m) {
   // read the movie's next frame
   m.read();  
   //event(m);
-  lastEventFrame = m;
+  setLastEventFrame(m);
 }
 
 // videoEvent runs for each new frame of Kinect data
 void videoEvent(Kinect k) {
-  //background(0);
   if (imageMode == ImageMode.KINECT_VIDEO) {
-    //PImage frame 
-    lastEventFrame = k.getVideoImage();
-    //image(frame, 0, 0);
-    //fill(255);
-    //event(frame);  
+    setLastEventFrame(k.getVideoImage());  
   } else if (imageMode == ImageMode.KINECT_COLOR_DEPTH) {
-    //PImage frame
-    lastEventFrame = k.getDepthImage();
-    //image(frame, 0, 0);
-    //fill(255);
-    //event(frame);
+    setLastEventFrame(k.getDepthImage());
   }
 }
 
 // draw runs every time the screen is redrawn - show the movie...
 void draw() {
+  if (fr2 % 100 == 0) flop2();
+  fr2++;
+  
   if (imageMode == ImageMode.IMAGE) {
     event(testImage);
   } else {
     event(lastEventFrame);
   }
-
-  //if (imageMode == ImageMode.IMAGE) {
-  //} else if (imageMode == ImageMode.MOVIE) {
-  //  image(myMovie, 0, 80);
-  //} else if (imageMode == ImageMode.KINECT_COLOR_DEPTH) { // if (imageMode equals KINECT_VIDEO or KINECT_IR
-  
-  //}
 
   // then try to show what was most recently sent to the LEDs
   // by displaying all the images for each port.
