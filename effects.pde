@@ -17,8 +17,8 @@ EMSecondary secondary = EMSecondary.NONE;
 int pmFrameCounter = 0;
 int smFrameCounter = 0;
 
-int pmFrameTimeout = 100;
-int smFrameTimeout = 100;
+int pmFrameTimeout = 60 * 30;
+int smFrameTimeout = 60 * 30;
 
 void checkUpdatePrimary() {
   if (pmFrameCounter == pmFrameTimeout) {

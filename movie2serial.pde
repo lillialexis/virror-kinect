@@ -100,8 +100,10 @@ long fr1 = 0;
 long fr2 = 0;
 
 PImage lastEventFrame = null;
-void setLastEventFrame(PImage frame) {
-  lastEventFrame = frame;
+PImage currentEventFrame = null;
+void setCurrentEventFrame(PImage frame) {
+  lastEventFrame = currentEventFrame;
+  currentEventFrame = frame;
   
   if (fr1 % 100 == 0) flop1();
   fr1++;
@@ -112,16 +114,20 @@ void movieEvent(Movie m) {
   // read the movie's next frame
   m.read();  
   //event(m);
-  setLastEventFrame(m);
+  setCurrentEventFrame(m);
 }
 
 // videoEvent runs for each new frame of Kinect data
 void videoEvent(Kinect k) {
   if (imageMode == ImageMode.KINECT_VIDEO) {
-    setLastEventFrame(k.getVideoImage());  
+    setCurrentEventFrame(k.getVideoImage());  
   } else if (imageMode == ImageMode.KINECT_COLOR_DEPTH) {
-    setLastEventFrame(k.getDepthImage());
+    setCurrentEventFrame(k.getDepthImage());
   }
+}
+
+PImage mixedFrames() {
+  return currentEventFrame;
 }
 
 // draw runs every time the screen is redrawn - show the movie...
@@ -129,12 +135,17 @@ void draw() {
   if (fr2 % 100 == 0) flop2();
   fr2++;
   
+  PImage frame = mixedFrames();
+  
   if (imageMode == ImageMode.IMAGE) {
-    event(testImage);
+    event(frame);
   } else {
-    event(lastEventFrame);
+    event(frame);
   }
 
+  if (frame != null)
+    image(frame, 0, 0);
+  
   // then try to show what was most recently sent to the LEDs
   // by displaying all the images for each port.
   for (int i=0; i < numPorts; i++) {
