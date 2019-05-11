@@ -1,14 +1,8 @@
 
-PImage lastFrame = null;
 void event(PImage frame) {
   
   //if (framerate == 0) framerate = m.getSourceFrameRate();
   framerate = 30.0; // TODO, how to read the frame rate???
-  
-  if (frame != lastFrame) {
-    frame.filter(INVERT);
-    lastFrame = frame;
-  }
   
   for (int i=0; i < numPorts; i++) {    
     // copy a portion of the movie's image to the LED image
@@ -18,6 +12,9 @@ void event(PImage frame) {
     int yheight = percentage(frame.height, ledArea[i].height);
     ledImage[i].copy(frame, xoffset, yoffset, xwidth, yheight,
                      0, 0, ledImage[i].width, ledImage[i].height);
+                     
+    castEffect(ledImage[i]);        
+                     
     // convert the LED image to raw data
     byte[] ledData =  new byte[(ledImage[i].width * ledImage[i].height * 3) + 3];
     image2data(ledImage[i], ledData, ledLayout[i]);
