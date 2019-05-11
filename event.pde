@@ -1,5 +1,6 @@
 
 void event(PImage frame) {
+  if (frame == null) return;
   
   //if (framerate == 0) framerate = m.getSourceFrameRate();
   framerate = 30.0; // TODO, how to read the frame rate???

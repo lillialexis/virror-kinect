@@ -78,14 +78,13 @@ void setup() {
   size(480, 400);  // create the window
 
   if (imageMode == ImageMode.IMAGE) {
-
     testImage = loadImage(imagePath());
-  } else if (imageMode == ImageMode.MOVIE) {
 
+  } else if (imageMode == ImageMode.MOVIE) {
     myMovie = new Movie(this, moviePath());
     myMovie.loop();  // start the movie :-)
-  } else {
-    
+
+  } else {    
     kinect = new Kinect(this);
     kinect.initDepth();
     kinect.initVideo();
@@ -97,46 +96,48 @@ void setup() {
   }
 }
 
+PImage lastEventFrame = null;
+
 // movieEvent runs for each new frame of movie data
 void movieEvent(Movie m) {
   // read the movie's next frame
   m.read();  
-  event(m);
+  //event(m);
+  lastEventFrame = m;
 }
 
 // videoEvent runs for each new frame of Kinect data
 void videoEvent(Kinect k) {
-  background(0);
+  //background(0);
   if (imageMode == ImageMode.KINECT_VIDEO) {
-    PImage frame = k.getVideoImage();
-    image(frame, 0, 0);
-    fill(255);
-    event(frame);  
-}
-  if (imageMode == ImageMode.KINECT_COLOR_DEPTH) {
-    PImage frame = k.getDepthImage();
-    image(frame, 0, 0);
-    fill(255);
-    event(frame);
+    //PImage frame 
+    lastEventFrame = k.getVideoImage();
+    //image(frame, 0, 0);
+    //fill(255);
+    //event(frame);  
+  } else if (imageMode == ImageMode.KINECT_COLOR_DEPTH) {
+    //PImage frame
+    lastEventFrame = k.getDepthImage();
+    //image(frame, 0, 0);
+    //fill(255);
+    //event(frame);
   }
-  
 }
 
 // draw runs every time the screen is redrawn - show the movie...
 void draw() {
-  // show the original video
-
   if (imageMode == ImageMode.IMAGE) {
-    //if (doOnce == 0)
     event(testImage);
+  } else {
+    event(lastEventFrame);
   }
 
-  if (imageMode == ImageMode.IMAGE) {
-  } else if (imageMode == ImageMode.MOVIE) {
-    image(myMovie, 0, 80);
-  } else if (imageMode == ImageMode.KINECT_COLOR_DEPTH) { // if (imageMode equals KINECT_VIDEO or KINECT_IR
+  //if (imageMode == ImageMode.IMAGE) {
+  //} else if (imageMode == ImageMode.MOVIE) {
+  //  image(myMovie, 0, 80);
+  //} else if (imageMode == ImageMode.KINECT_COLOR_DEPTH) { // if (imageMode equals KINECT_VIDEO or KINECT_IR
   
-  }
+  //}
 
   // then try to show what was most recently sent to the LEDs
   // by displaying all the images for each port.

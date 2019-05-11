@@ -1,3 +1,34 @@
+long lastFrameTime = 0;
+void time1() {
+  //long currentFrameTime = System.currentTimeMillis();
+  //long frameDelta = currentFrameTime - lastFrameTime;
+  //float toSeconds = (float)frameDelta / 1000;
+  //float frameRate = 1 / toSeconds;
+
+  //println(frameRate);
+
+  //lastFrameTime = currentFrameTime;
+}
+
+long lastFlop1 = 0;
+long lastFlop2 = 0;
+void flop1() {
+  long flop = System.currentTimeMillis();
+  float delta = (float)(flop - lastFlop1) / 1000.0;
+  lastFlop1 = flop;
+
+  print("k: ");
+  println(delta);
+}
+
+void flop2() {
+  long flop = System.currentTimeMillis();
+  float delta = (float)(flop - lastFlop2) / 1000.0;
+  lastFlop2 = flop;
+  
+  print("d: ");
+  println(delta);
+}
 
 // translate the 24 bit color from RGB to the actual
 // order used by the LED wiring.  GRB is the most common.
