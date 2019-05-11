@@ -1,6 +1,6 @@
 /* VALUES TO CHANGE */
 
-ImageMode imageMode = ImageMode.KINECT_COLOR_DEPTH; 
+ImageMode imageMode = ImageMode.IMAGE;//ImageMode.KINECT_COLOR_DEPTH; 
 Board board = Board.REAL;
 
 boolean mirrorKinect = false; // Not yet used anywhere
@@ -8,9 +8,10 @@ boolean mirrorKinect = false; // Not yet used anywhere
 String[] imagePaths = { 
   "./data/VirrorSampleSmall.jpg", 
   "./data/VirrorSampleMedium.jpg",
+  "./data/VirrorSampleA.jpg",
   // Add more images here, and change imagePathIndex to point to the image you want
 };
-int imagePathIndex = 1;
+int imagePathIndex = 2;
 
 String[] moviePaths = { 
   "movie.mp4", 

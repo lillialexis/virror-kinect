@@ -51,7 +51,7 @@ Movie myMovie;
 
 float gamma = 3.2;
 
-PImage testImage;
+//PImage testImage;
 
 int numPorts=0;  // the number of serial ports in use
 int maxPorts=24; // maximum number of serial ports
@@ -78,7 +78,7 @@ void setup() {
   size(480, 400);  // create the window
 
   if (imageMode == ImageMode.IMAGE) {
-    testImage = loadImage(imagePath());
+    currentEventFrame = loadImage(imagePath());
 
   } else if (imageMode == ImageMode.MOVIE) {
     myMovie = new Movie(this, moviePath());
@@ -101,10 +101,16 @@ long fr2 = 0;
 
 PImage lastEventFrame = null;
 PImage currentEventFrame = null;
+
+int fadeCounter = 0;
+int fadeSpeed = 40;
+
 void setCurrentEventFrame(PImage frame) {
   lastEventFrame = currentEventFrame;
   currentEventFrame = frame;
-  
+
+  fadeCounter = 0;
+
   if (fr1 % 100 == 0) flop1();
   fr1++;
 }
@@ -127,6 +133,27 @@ void videoEvent(Kinect k) {
 }
 
 PImage mixedFrames() {
+  if (currentEventFrame == null)// || lastEventFrame == null)
+    return currentEventFrame;
+    
+  if (imageMode == ImageMode.IMAGE && fadeCounter == fadeSpeed)
+    fadeCounter = 0;  
+    
+  int fadeAmount = fadeCounter == fadeSpeed ? 
+                      0 : 
+                      255 - ((255 / fadeSpeed) * fadeCounter);
+  
+  println(fadeAmount);
+  
+  //currentEventFrame.loadPixels();
+  //image(currentEventFrame, 0, 0);
+  background(0);
+  tint(255, fadeAmount);
+  image(currentEventFrame, -10, 0);
+  //currentEventFrame.updatePixels();
+  
+  //currentEventFrame.ALPHA_MASK = fadeAmount;
+  
   return currentEventFrame;
 }
 
@@ -137,14 +164,16 @@ void draw() {
   
   PImage frame = mixedFrames();
   
-  if (imageMode == ImageMode.IMAGE) {
+  fadeCounter++;
+  
+  //if (imageMode == ImageMode.IMAGE) {
     event(frame);
-  } else {
-    event(frame);
-  }
+  //} else {
+  //  event(frame);
+  //}
 
-  if (frame != null)
-    image(frame, 0, 0);
+  //if (frame != null)
+    //image(frame, 0, 0);
   
   // then try to show what was most recently sent to the LEDs
   // by displaying all the images for each port.
