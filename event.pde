@@ -42,6 +42,17 @@ void image2data(PImage image, byte[] data, boolean layout) {
   int linesPerPin = image.height / 8;
   int pixel[] = new int[8];
 
+//  int i = 0;
+//  for (y = 0; y < image.height; y++) {
+//    for (x = 0; x < image.width; x++) {
+//      int index = xy(i, x, y, image.width, image.height, layout, linesPerPin);
+//      pixel[i] = image.pixels[index];
+//      pixel[i] = colorWiring(pixel[i]);
+//      i++;
+//    }
+//  }
+//}
+      
  for (y = 0; y < linesPerPin; y++) {
     if ((y & 1) == (layout ? 0 : 1)) {
       // even numbered rows are left to right
@@ -64,6 +75,9 @@ void image2data(PImage image, byte[] data, boolean layout) {
     for (x = xbegin; x != xend; x += xinc) {
       for (int i = ibegin; i != iend; i += iinc) {
         // fetch 8 pixels from the image, 1 for each pin
+        // image index 0 is top left, 1 moves right, then down.
+        // value for Y is height/8, so group height
+        // X understands the width of the screen
         int index = xy(i, x, y, image.width, image.height, layout, linesPerPin);
 
         pixel[i] = image.pixels[index];
@@ -74,7 +88,9 @@ void image2data(PImage image, byte[] data, boolean layout) {
           print("\t");
           print("x:\t", x);
           print("\t");
-          println("i:\t", index);
+          print("i:\t", i);
+          print("\t");
+          println("idx:\t", index);
         }
       }
 

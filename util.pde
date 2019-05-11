@@ -8,7 +8,7 @@ int colorWiring(int c) {
   red = gammatable[red];
   green = gammatable[green];
   blue = gammatable[blue];
-  return (green << 16) | (red << 8) | (blue); // GRB - most common wiring
+  return (green << 8) | (red << 16) | (blue); // GRB - most common wiring
 }
 
 // ask a Teensy board for its LED configuration, and set up the info for it.

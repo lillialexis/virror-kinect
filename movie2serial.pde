@@ -49,7 +49,7 @@ float deg;
 
 Movie myMovie;
 
-float gamma = 1.7;
+float gamma = 3.2;
 
 PImage testImage;
 
@@ -91,8 +91,9 @@ void setup() {
     kinect.initVideo();
     kinect.enableIR(imageMode == ImageMode.KINECT_IR);
     kinect.enableColorDepth(imageMode == ImageMode.KINECT_COLOR_DEPTH);
-    
+   
     deg = kinect.getTilt();
+    kinect.setTilt(-285);
   }
 }
 
@@ -106,11 +107,19 @@ void movieEvent(Movie m) {
 // videoEvent runs for each new frame of Kinect data
 void videoEvent(Kinect k) {
   background(0);
-  PImage frame = k.getVideoImage();
-  image(frame, 0, 0);
-  fill(255);
+  if (imageMode == ImageMode.KINECT_VIDEO) {
+    PImage frame = k.getVideoImage();
+    image(frame, 0, 0);
+    fill(255);
+    event(frame);  
+}
+  if (imageMode == ImageMode.KINECT_COLOR_DEPTH) {
+    PImage frame = k.getDepthImage();
+    image(frame, 0, 0);
+    fill(255);
+    event(frame);
+  }
   
-  event(frame);
 }
 
 // draw runs every time the screen is redrawn - show the movie...
@@ -125,7 +134,8 @@ void draw() {
   if (imageMode == ImageMode.IMAGE) {
   } else if (imageMode == ImageMode.MOVIE) {
     image(myMovie, 0, 80);
-  } else { // if (imageMode equals KINECT_VIDEO or KINECT_IR
+  } else if (imageMode == ImageMode.KINECT_COLOR_DEPTH) { // if (imageMode equals KINECT_VIDEO or KINECT_IR
+  
   }
 
   // then try to show what was most recently sent to the LEDs

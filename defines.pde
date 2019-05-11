@@ -1,7 +1,7 @@
 /* VALUES TO CHANGE */
 
-ImageMode imageMode = ImageMode.KINECT_VIDEO; 
-Board board = Board.DEV;
+ImageMode imageMode = ImageMode.KINECT_COLOR_DEPTH; 
+Board board = Board.REAL;
 
 boolean mirrorKinect = false; // Not yet used anywhere
 
@@ -10,7 +10,7 @@ String[] imagePaths = {
   "./data/VirrorSampleMedium.jpg",
   // Add more images here, and change imagePathIndex to point to the image you want
 };
-int imagePathIndex = 0;
+int imagePathIndex = 1;
 
 String[] moviePaths = { 
   "movie.mp4", 
@@ -19,11 +19,11 @@ String[] moviePaths = {
   "snowflake.avi"
   // Add more movies here, and change moviePathIndex to point to the movie you want
 };
-int moviePathIndex = 3;
+int moviePathIndex = 0;
 
 String[] usbPorts = { 
   "/dev/cu.usbmodem4438171",
-  "COM4",
+  "COM5",
   "/dev/ttyACM0",
   // Add more port names here, and change usbPortIndex to point to the port you want
 };
