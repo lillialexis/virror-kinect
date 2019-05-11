@@ -10,7 +10,7 @@ int xy(int i, int x, int y, int width, int height, boolean layout, int ledsPerPi
   // i is teensy channel output pin, so local Y 
   
   //flip X and Y and i
-  //x = width - x - 1;
+  x = width - x - 1;
   //y = (height / 8) - y -1; 
   i = 8 - i -1 ;
   
