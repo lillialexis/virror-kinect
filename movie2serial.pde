@@ -132,40 +132,38 @@ void videoEvent(Kinect k) {
 }
 
 PImage mixedFrames() {
-  if (currentEventFrame == null)// || lastEventFrame == null)
-    return currentEventFrame;
-    
-  if (imageMode == ImageMode.IMAGE && fadeCounter == fadeSpeed)
-    fadeCounter = 0;  
-    
-  int fadeAmount = fadeCounter == fadeSpeed ? 
-                      0 : 
-                      255 - ((255 / fadeSpeed) * fadeCounter);
-  background(0);
-  tint(255, fadeAmount);
-  image(currentEventFrame, -10, 0);
-   
   return currentEventFrame;
+  // TODO: Do that fading/ghosting thing here. Below code isn't currently working.
+  //if (currentEventFrame == null || lastEventFrame == null)
+  //  return currentEventFrame;
+    
+  //if (imageMode == ImageMode.IMAGE && fadeCounter == fadeSpeed)
+  //  fadeCounter = 0;
+    
+  //int fadeAmount = fadeCounter == fadeSpeed ?
+  //                    0 :
+  //                    255 - ((255 / fadeSpeed) * fadeCounter);
+  //background(0);
+  //tint(255, fadeAmount);
+  //image(currentEventFrame, -10, 0);
+   
+  //return currentEventFrame;
 }
 
 // draw runs every time the screen is redrawn - show the movie...
 void draw() {
   if (fr2 % 100 == 0) flop2();
   fr2++;
-  
+
   PImage frame = mixedFrames();
-  
+
   fadeCounter++;
-  
-  //if (imageMode == ImageMode.IMAGE) {
-    event(frame);
-  //} else {
-  //  event(frame);
-  //}
+
+  event(frame);
 
   //if (frame != null)
     //image(frame, 0, 0);
-  
+
   // then try to show what was most recently sent to the LEDs
   // by displaying all the images for each port.
   for (int i=0; i < numPorts; i++) {

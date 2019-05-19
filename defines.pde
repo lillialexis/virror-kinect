@@ -11,7 +11,7 @@ String[] imagePaths = {
   "./data/VirrorSampleA.jpg",
   // Add more images here, and change imagePathIndex to point to the image you want
 };
-int imagePathIndex = 2;
+int imagePathIndex = 1;
 
 String[] moviePaths = { 
   "movie.mp4", 
